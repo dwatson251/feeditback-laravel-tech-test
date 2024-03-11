@@ -13,9 +13,9 @@ class MovieSearchCriteria
     private array $genres = [];
     private array $actors = [];
 
-    private function __construct() {}
+    public function __construct() {}
 
-    public function setReleaseYears(int ...$years): MovieSearchCriteria
+    public function setReleaseYears(string ...$years): MovieSearchCriteria
     {
         $this->releaseYears = $years;
         return $this;
@@ -34,7 +34,7 @@ class MovieSearchCriteria
     }
 
     /**
-     * @return array<int>
+     * @return array<string>
      */
     public function getReleaseYears(): array
     {

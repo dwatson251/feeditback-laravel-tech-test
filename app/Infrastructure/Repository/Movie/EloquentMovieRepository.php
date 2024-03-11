@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Repository\Movie;
 
+use App\Domain\Entity\ApiUser;
 use App\Domain\Entity\Movie\Movie;
 use App\Domain\Entity\Movie\MovieSearchCriteria;
 use App\Domain\Repository\Movie\MovieExistsExceptionInterface;
@@ -47,6 +48,22 @@ class EloquentMovieRepository implements MovieRepositoryInterface
 
     public function search(MovieSearchCriteria $criteria): array
     {
-        return [];
+        $query = DB::table('movies')
+            ->selectRaw('*, strftime(\'%Y\', release_date) as release_year');
+
+        if ($criteria->getReleaseYears()) {
+            $query->whereIn('release_year', $criteria->getReleaseYears());
+        }
+
+        $results = $query->get();
+
+        return array_map(function ($result) {
+            $movie = new Movie(
+                $result->name,
+                new \DateTimeImmutable($result->release_date),
+                new ApiUser(),
+            );
+            return $movie;
+        }, $results->toArray());
     }
 }

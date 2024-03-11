@@ -19,3 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::put('/movies/new', \App\Http\Controllers\Movie\Add::class);
+Route::get('/movies/search', \App\Http\Controllers\Movie\Search::class);
