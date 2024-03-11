@@ -1,0 +1,13 @@
+diff --git a/vendor/laravel/sail/runtimes/8.1/Dockerfile.old b/vendor/laravel/sail/runtimes/8.1/Dockerfile
+index 0277709..4997869 100644
+--- a/vendor/laravel/sail/runtimes/8.1/Dockerfile
++++ b/vendor/laravel/sail/runtimes/8.1/Dockerfile
+@@ -3,7 +3,7 @@ FROM ubuntu:22.04
+ LABEL maintainer="Taylor Otwell"
+
+ ARG WWWGROUP
+-ARG NODE_VERSION=16
++ARG NODE_VERSION=20
+ ARG POSTGRES_VERSION=14
+
+ WORKDIR /var/www/html

@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.7"
     },
     "require-dev": {
+        "cweagans/composer-patches": "^1.7",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
@@ -54,6 +55,11 @@
     "extra": {
         "laravel": {
             "dont-discover": []
+        },
+        "patches": {
+            "laravel/sail": {
+                "Ensure node version installed is version 20": "vendor_patches/laravel/sail/correct-node-version.patch"
+            }
         }
     },
     "config": {
@@ -61,7 +67,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "cweagans/composer-patches": true
         }
     },
     "minimum-stability": "dev",
