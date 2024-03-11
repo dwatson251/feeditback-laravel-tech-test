@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace app\Http\Controllers\Movie;
+namespace App\Http\Controllers\Movie;
 
 use app\Domain\Repository\Movie\MovieRepositoryInterface;
 use App\Http\Controllers\Controller;

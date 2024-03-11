@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace tests\Feature;
+namespace Tests\Feature;
 
 use App\Models\Actor;
 use App\Models\Genre;
