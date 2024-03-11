@@ -6,21 +6,28 @@ namespace Tests\Feature;
 
 use App\Models\Movie;
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
-
+/**
+ * @coversDefaultClass \App\Http\Controllers\Movie\Add
+ */
 class MovieAddTest extends TestCase
 {
-    use \Illuminate\Foundation\Testing\DatabaseMigrations;
-
+    use DatabaseTransactions;
     public function setUp(): void
     {
         parent::setUp();
 
+        Artisan::call('migrate');
+
         $this->testUser = new User([
             'name' => 'Test User',
             'email' => 'testuser@test.com',
-            'password' => 'password'
+            'password' => 'password',
+            'uuid' => Str::uuid()->toString(),
         ]);
         $this->testUser->save();
     }
@@ -31,10 +38,10 @@ class MovieAddTest extends TestCase
             'name' => 'A fun movie about cats',
             'description' => 'Starring 500 cats, this is a fantastic movie about cats',
             'image' => '',
-            'release_date' => '2010-31-12 23:59:59',
+            'release_date' => '2010-12-31 23:59:59',
             'rating' => 'U',
             'award_winning' => false,
-            'user_id' => $this->testUser->id,
+            'user' => $this->testUser->uuid,
         ]);
 
         $this->assertEquals(201, $response->getStatusCode());
@@ -48,20 +55,21 @@ class MovieAddTest extends TestCase
             'name' => $name,
             'description' => 'Starring 499 cats, this is a fantastic movie about cats',
             'image' => '',
-            'release_date' => '2010-31-12 23:59:59',
+            'release_date' => '2010-12-31 23:59:59',
             'rating' => 'U',
             'award_winning' => false,
             'user_id' => $this->testUser->id,
+            'uuid' => Str::uuid()->toString(),
         ]))->save();
 
         $response = $this->put('/api/movies/new', [
             'name' => $name,
             'description' => 'Starring 499 cats, this is a fantastic movie about cats',
             'image' => '',
-            'release_date' => '2010-31-12 23:59:59',
+            'release_date' => '2010-12-31 23:59:59',
             'rating' => 'U',
             'award_winning' => false,
-            'user_id' => $this->testUser->id,
+            'user' => $this->testUser->uuid,
         ]);
 
         $this->assertEquals(400, $response->getStatusCode());
@@ -73,10 +81,10 @@ class MovieAddTest extends TestCase
             'name' => '',
             'description' => 'Starring 500 cats, this is a fantastic movie about cats',
             'image' => '',
-            'release_date' => '2010-31-12 23:59:59',
+            'release_date' => '2010-12-31 23:59:59',
             'rating' => 'U',
             'award_winning' => false,
-            'user_id' => $this->testUser->id,
+            'user' => $this->testUser->uuid,
         ]);
 
         $this->assertEquals(400, $response->getStatusCode());
@@ -85,13 +93,13 @@ class MovieAddTest extends TestCase
     public function testAMovieWithAnInvalidRatingMustBeRejected()
     {
         $response = $this->put('/api/movies/new', [
-            'name' => '',
+            'name' => 'A Movie',
             'description' => 'Starring 500 cats, this is a fantastic movie about cats',
             'image' => '',
-            'release_date' => '2010-31-12 23:59:59',
+            'release_date' => '2010-12-31 23:59:59',
             'rating' => 'ABC',
             'award_winning' => false,
-            'user_id' => $this->testUser->id,
+            'user' => $this->testUser->uuid,
         ]);
 
         $this->assertEquals(400, $response->getStatusCode());

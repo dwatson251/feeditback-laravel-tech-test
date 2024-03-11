@@ -17,5 +17,6 @@ class Movie extends Model
         'release_date',
         'rating',
         'award_winning',
+        'uuid',
     ];
 }

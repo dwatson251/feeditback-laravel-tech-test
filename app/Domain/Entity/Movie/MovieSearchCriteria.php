@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\DTO\Movie;
+namespace App\Domain\Entity\Movie;
 
 use App\Models\Actor;
 use App\Models\Genre;

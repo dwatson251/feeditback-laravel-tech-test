@@ -7,12 +7,15 @@ use App\Models\Actor;
 use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
 use Tests\CreatesApplication;
 use Tests\TestCase;
 
 class MovieSearchTest extends TestCase
 {
-    use \Illuminate\Foundation\Testing\DatabaseMigrations;
+    use DatabaseTransactions;
 
     private User $testUser;
 
@@ -20,10 +23,13 @@ class MovieSearchTest extends TestCase
     {
         parent::setUp();
 
+        Artisan::call('migrate');
+
         $this->testUser = new User([
             'name' => 'Test User',
             'email' => 'testuser@test.com',
-            'password' => 'password'
+            'password' => 'password',
+            'uuid' => Str::uuid()->toString(),
         ]);
         $this->testUser->save();
     }
@@ -38,13 +44,14 @@ class MovieSearchTest extends TestCase
             'rating' => 'U',
             'award_winning' => false,
             'user_id' => $this->testUser,
+            'uuid' => Str::uuid()->toString(),
         ]))->save();
 
         $criteriaString = [
             'releaseYears' => [2010],
         ];
 
-        $response = $this->get('movies/search?' . http_build_query($criteriaString));
+        $response = $this->get('api/movies/search?' . http_build_query($criteriaString));
         $resultsParsed = json_decode($response->getContent());
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -61,13 +68,14 @@ class MovieSearchTest extends TestCase
             'rating' => 'U',
             'award_winning' => false,
             'user_id' => $this->testUser,
+            'uuid' => Str::uuid()->toString(),
         ]))->save();
 
         $criteriaString = [
             'releaseYears' => [2021],
         ];
 
-        $response = $this->get('movies/search?' . http_build_query($criteriaString));
+        $response = $this->get('api/movies/search?' . http_build_query($criteriaString));
         $resultsParsed = json_decode($response->getContent());
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -96,6 +104,7 @@ class MovieSearchTest extends TestCase
             'actors' => [$actor],
             'genres' => [],
             'user_id' => $this->testUser,
+            'uuid' => Str::uuid()->toString(),
         ]))->save();
 
         (new Movie([
@@ -108,6 +117,7 @@ class MovieSearchTest extends TestCase
             'actors' => [],
             'genres' => [$genre],
             'user_id' => $this->testUser,
+            'uuid' => Str::uuid()->toString(),
         ]))->save();
 
         $criteriaString = [
@@ -115,7 +125,7 @@ class MovieSearchTest extends TestCase
             'genres' => [$genre->id],
         ];
 
-        $response = $this->get('movies/search?' . http_build_query($criteriaString));
+        $response = $this->get('api/movies/search?' . http_build_query($criteriaString));
         $resultsParsed = json_decode($response->getContent());
 
         $this->assertEquals(200, $response->getStatusCode());

@@ -3,8 +3,17 @@ declare(strict_types=1);
 
 namespace App\Domain\Request;
 
-class SubmitMovieRequest
+use Illuminate\Http\Request;
+
+class AddMovieRequest extends Request
 {
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public string $user;
+
     public string $name;
     public string $description;
     public string $imageUrl;

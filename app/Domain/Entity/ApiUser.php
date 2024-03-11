@@ -8,14 +8,8 @@ class ApiUser
 {
     private string $uuid;
 
-    public function __construct() {
-        $this->uuid = Str::uuid()->toString();
-    }
-
-    public function setUuid(string $uuid): ApiUser
-    {
-        $this->uuid = $uuid;
-        return $this;
+    public function __construct(?string $uuid = null) {
+        $this->uuid = $uuid ?? Str::uuid()->toString();
     }
 
     public function getUuid(): string

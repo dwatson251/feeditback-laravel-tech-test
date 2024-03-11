@@ -9,10 +9,10 @@ use Illuminate\Support\Str;
 class Movie
 {
     private string $uuid;
-    private string $description;
-    private string $imageUrl;
-    private SuitabilityRating $suitabilityRating;
-    private bool $awardWinning;
+    private ?string $description = null;
+    private ?string $imageUrl = null;
+    private ?SuitabilityRating $suitabilityRating = null;
+    private ?bool $awardWinning = null;
     private \DateTimeInterface $createdAt;
     private \DateTimeInterface $updatedAt;
 
@@ -20,8 +20,8 @@ class Movie
         private string $title,
         private \DateTimeInterface $releaseDate,
         private ApiUser $submitter,
-        ?\DateTimeImmutable $createdAt,
-        ?\DateTimeImmutable $updatedAt,
+        ?\DateTimeImmutable $createdAt = null,
+        ?\DateTimeImmutable $updatedAt = null,
     ) {
         $this->uuid = Str::uuid()->toString();
         $this->createdAt = $createdAt ?? new \DateTimeImmutable();
@@ -63,22 +63,22 @@ class Movie
         return $this->uuid;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function getImageUrl(): string
+    public function getImageUrl(): ?string
     {
         return $this->imageUrl;
     }
 
-    public function getSuitabilityRating(): SuitabilityRating
+    public function getSuitabilityRating(): ?SuitabilityRating
     {
         return $this->suitabilityRating;
     }
 
-    public function isAwardWinning(): bool
+    public function isAwardWinning(): ?bool
     {
         return $this->awardWinning;
     }
