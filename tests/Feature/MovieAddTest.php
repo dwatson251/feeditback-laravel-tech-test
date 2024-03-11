@@ -9,7 +9,7 @@ use App\Models\User;
 use Tests\TestCase;
 
 
-class MovieSubmissionTest extends TestCase
+class MovieAddTest extends TestCase
 {
     use \Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -34,10 +34,10 @@ class MovieSubmissionTest extends TestCase
             'release_date' => '2010-31-12 23:59:59',
             'rating' => 'U',
             'award_winning' => false,
-            'user_id' => $this->testUser,
+            'user_id' => $this->testUser->id,
         ]);
 
-        $this->assertEquals(204, $response->getStatusCode());
+        $this->assertEquals(201, $response->getStatusCode());
     }
 
     public function testAMovieWithTheSameNameCannotBeAdded()
@@ -51,7 +51,7 @@ class MovieSubmissionTest extends TestCase
             'release_date' => '2010-31-12 23:59:59',
             'rating' => 'U',
             'award_winning' => false,
-            'user_id' => $this->testUser,
+            'user_id' => $this->testUser->id,
         ]))->save();
 
         $response = $this->put('/movies/submit', [
@@ -61,7 +61,7 @@ class MovieSubmissionTest extends TestCase
             'release_date' => '2010-31-12 23:59:59',
             'rating' => 'U',
             'award_winning' => false,
-            'user_id' => $this->testUser,
+            'user_id' => $this->testUser->id,
         ]);
 
         $this->assertEquals(400, $response->getStatusCode());
@@ -76,7 +76,7 @@ class MovieSubmissionTest extends TestCase
             'release_date' => '2010-31-12 23:59:59',
             'rating' => 'U',
             'award_winning' => false,
-            'user_id' => $this->testUser,
+            'user_id' => $this->testUser->id,
         ]);
 
         $this->assertEquals(400, $response->getStatusCode());
@@ -91,7 +91,7 @@ class MovieSubmissionTest extends TestCase
             'release_date' => '2010-31-12 23:59:59',
             'rating' => 'ABC',
             'award_winning' => false,
-            'user_id' => $this->testUser,
+            'user_id' => $this->testUser->id,
         ]);
 
         $this->assertEquals(400, $response->getStatusCode());

@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SubmitNew extends Controller
+class Add extends Controller
 {
     public function __construct(MovieRepositoryInterface $movieRepository)
     {
@@ -16,6 +16,6 @@ class SubmitNew extends Controller
 
     public function __invoke(Request $request): Response
     {
-        return new Response(null, 204);
+        return new Response(null, 201);
     }
 }
