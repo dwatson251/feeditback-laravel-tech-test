@@ -51,7 +51,7 @@ class MovieSearchTest extends TestCase
             'releaseYears' => [2010],
         ];
 
-        $response = $this->get('api/movies/search?' . http_build_query($criteriaString));
+        $response = $this->get('/api/movies/search?' . http_build_query($criteriaString));
         $resultsParsed = json_decode($response->getContent());
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -75,7 +75,7 @@ class MovieSearchTest extends TestCase
             'releaseYears' => [2021],
         ];
 
-        $response = $this->get('api/movies/search?' . http_build_query($criteriaString));
+        $response = $this->get('/api/movies/search?' . http_build_query($criteriaString));
         $resultsParsed = json_decode($response->getContent());
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -125,7 +125,7 @@ class MovieSearchTest extends TestCase
             'genres' => [$genre->id],
         ];
 
-        $response = $this->get('api/movies/search?' . http_build_query($criteriaString));
+        $response = $this->get('/api/movies/search?' . http_build_query($criteriaString));
         $resultsParsed = json_decode($response->getContent());
 
         $this->assertEquals(200, $response->getStatusCode());
