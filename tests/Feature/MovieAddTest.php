@@ -27,7 +27,7 @@ class MovieAddTest extends TestCase
 
     public function testAMovieCanBeAdded()
     {
-        $response = $this->put('/movies/submit', [
+        $response = $this->put('/api/movies/new', [
             'name' => 'A fun movie about cats',
             'description' => 'Starring 500 cats, this is a fantastic movie about cats',
             'image' => '',
@@ -54,7 +54,7 @@ class MovieAddTest extends TestCase
             'user_id' => $this->testUser->id,
         ]))->save();
 
-        $response = $this->put('/movies/submit', [
+        $response = $this->put('/api/movies/new', [
             'name' => $name,
             'description' => 'Starring 499 cats, this is a fantastic movie about cats',
             'image' => '',
@@ -69,7 +69,7 @@ class MovieAddTest extends TestCase
 
     public function testAMovieWithoutANameMustBeRejected()
     {
-        $response = $this->put('/movies/submit', [
+        $response = $this->put('/api/movies/new', [
             'name' => '',
             'description' => 'Starring 500 cats, this is a fantastic movie about cats',
             'image' => '',
@@ -84,7 +84,7 @@ class MovieAddTest extends TestCase
 
     public function testAMovieWithAnInvalidRatingMustBeRejected()
     {
-        $response = $this->put('/movies/submit', [
+        $response = $this->put('/api/movies/new', [
             'name' => '',
             'description' => 'Starring 500 cats, this is a fantastic movie about cats',
             'image' => '',

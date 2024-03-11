@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Movie;
 
-use app\Domain\Repository\Movie\MovieRepositoryInterface;
+use App\Domain\Repository\Movie\MovieRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
