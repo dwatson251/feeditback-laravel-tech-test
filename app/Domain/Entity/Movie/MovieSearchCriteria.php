@@ -12,6 +12,8 @@ class MovieSearchCriteria
     private array $releaseYears = [];
     private array $genres = [];
     private array $actors = [];
+    private int $limit = 10;
+    private ?string $cursor = null;
 
     public function __construct() {}
 
@@ -55,5 +57,27 @@ class MovieSearchCriteria
     public function getActors(): array
     {
         return $this->actors;
+    }
+
+    public function getCursor(): ?string
+    {
+        return $this->cursor;
+    }
+
+    public function setCursor(string $cursor): MovieSearchCriteria
+    {
+        $this->cursor = $cursor;
+        return $this;
+    }
+
+    public function getLimit(): int
+    {
+        return $this->limit;
+    }
+
+    public function setLimit(int $limit): MovieSearchCriteria
+    {
+        $this->limit = $limit;
+        return $this;
     }
 }

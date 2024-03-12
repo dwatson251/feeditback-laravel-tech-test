@@ -25,6 +25,7 @@ class MovieFactory extends Factory
             'release_date' => $this->faker->date,
             'rating' => $this->faker->word,
             'award_winning' => $this->faker->boolean,
+            'uuid' => $this->faker->uuid,
         ];
     }
 }

@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity\Movie;
 use App\Domain\Entity\ApiUser;
+use App\Domain\Entity\EntityInterface;
 use Illuminate\Support\Str;
 
-class Movie
+class Movie implements EntityInterface
 {
     private string $uuid;
-    private ?string $description = null;
+    private ?string $synopsis = null;
     private ?string $imageUrl = null;
     private ?SuitabilityRating $suitabilityRating = null;
     private ?bool $awardWinning = null;
@@ -34,9 +35,9 @@ class Movie
         return $this;
     }
 
-    public function setDescription(string $description): Movie
+    public function setSynopsis(string $synopsis): Movie
     {
-        $this->description = $description;
+        $this->synopsis = $synopsis;
         return $this;
     }
 
@@ -46,7 +47,7 @@ class Movie
         return $this;
     }
 
-    public function setSuitabilityRating(SuitabilityRating $suitabilityRating): Movie
+    public function setSuitabilityRating(?SuitabilityRating $suitabilityRating): Movie
     {
         $this->suitabilityRating = $suitabilityRating;
         return $this;
@@ -63,9 +64,9 @@ class Movie
         return $this->uuid;
     }
 
-    public function getDescription(): ?string
+    public function getSynopsis(): ?string
     {
-        return $this->description;
+        return $this->synopsis;
     }
 
     public function getImageUrl(): ?string
@@ -106,5 +107,20 @@ class Movie
     public function getSubmitter(): ApiUser
     {
         return $this->submitter;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'title' => $this->title,
+            'synopsis' => $this->synopsis,
+            'image_url' => $this->imageUrl,
+            'release_date' => $this->releaseDate->format('Y-m-d'),
+            'suitability_rating' => $this->suitabilityRating,
+            'is_award_winning' => $this->awardWinning,
+            'created_at' => $this->createdAt->format(\DATE_ATOM),
+            'updated_at' => $this->updatedAt->format(\DATE_ATOM),
+            'submitter_user' => $this->submitter->getUuid(),
+        ];
     }
 }

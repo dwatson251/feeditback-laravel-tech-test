@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class Add extends Controller
 {
     public function __construct(
-        private MovieRepositoryInterface $movieRepository,
+        private readonly MovieRepositoryInterface $movieRepository,
     ) {}
 
     public function __invoke(Request $request): Response
